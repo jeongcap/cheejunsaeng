@@ -11,7 +11,7 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 
 server.post('webhook', (req, res) => {
-    const companyToSearch = req.body.result && req.body.result.parameters && req.body.result.parameters.company ? req.body.result.parameters.company : 'KT'; //못찾으면 기본값(대부)
+    const companyToSearch = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.company ? req.body.queryResult.parameters.company : '기본값'; //못찾으면 기본값(대부)
     const reqUrl = encodeURI(`http://www.saramin.co.kr/zf_user/search/company?searchword=${companyToSearch}&searchType=auto&go`);
 
     http.get(reqUrl, (responseFromAPI) => {
@@ -24,9 +24,7 @@ server.post('webhook', (req, res) => {
             let dataToSend = 'OK';
 
             return res.json({
-                speech: dataToSend,
-                displayText: dataToSend,
-                source: ''
+                text : dataToSend
             });
         });
     }, (error) => {
