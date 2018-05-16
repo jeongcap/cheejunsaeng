@@ -1,37 +1,5 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
-
-const REQUIRE_AUTH = true
-const AUTH_TOKEN = 'an-example-token'
-
-app.use(bodyParser.json())
-app.set('port', (process.env.PORT || 5000))
-
-app.post('/webhook', function (req, res) {
-    if (REQUIRE_AUTH) {
-        if (req.headers['auth-token'] !== AUTH_TOKEN) {
-          return res.status(401).send('Unauthorized')
-        }
-    }
-
-    if (!req.body || !req.body.result || !req.body.result.parameters) {
-        return res.status(400).send('Bad Request')
-    }
-    var userName = req.body.result.parameters['given-name']
-    var webhookReply = 'Hello ' + userName + '! Welcome from the webhook.'
-
-    // the most basic response
-    res.status(200).json({
-        source: 'webhook',
-        speech: webhookReply,
-        displayText: webhookReply
-    })
-}
 
 
-
-/*
 var cheerio = require('cheerio');
 var request = require('request');
 
@@ -96,7 +64,7 @@ request(url, function(error, response, html){
                     console.log(notice_url_saram);
                     
                 })
-                
+                /*
                 홈페이지 지원 사이트 클래스?> 접근이 안됨
                 request(notice_url_saram, function(error, response, html){
                     if (!error) {
@@ -115,7 +83,7 @@ request(url, function(error, response, html){
                         })
                     }
                 });
-                
+                */
             }
 
         });
@@ -125,5 +93,3 @@ request(url, function(error, response, html){
   }
 
 });
-
-*/)
